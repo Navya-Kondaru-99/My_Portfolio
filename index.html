@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kondaru Navya | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome for skill logos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+            color: #222;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: linear-gradient(120deg, #e3f0fc 0%, #b6d0e2 100%);
+            position: relative;
+        }
+        /* Animated background: circuit lines and binary code */
+        .bg-anim-circuit {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .circuit-line {
+            position: absolute;
+            width: 2px;
+            height: 120px;
+            background: #5fa8d3;
+            opacity: 0.25;
+            animation: circuit-move 8s linear infinite;
+            border-radius: 2px;
+        }
+        .circuit-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #5fa8d3;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: dot-move 6s linear infinite;
+        }
+        @keyframes circuit-move {
+            0% { top: -120px; }
+            100% { top: 100vh; }
+        }
+        @keyframes dot-move {
+            0% { top: -10px; }
+            100% { top: 100vh; }
+        }
+        .binary {
+            position: absolute;
+            color: #b6d0e2;
+            font-size: 1.1em;
+            opacity: 0.18;
+            animation: binary-move 10s linear infinite;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+        }
+        @keyframes binary-move {
+            0% { top: -30px; }
+            100% { top: 100vh; }
+        }
+        /* Menu Bar */
+        nav {
+            width: 100%;
+            background: #5fa8d3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0 10vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        nav li {
+            margin: 0 18px;
+        }
+        nav a {
+            display: block;
+            padding: 18px 0;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+            position: relative;
+        }
+        nav a:hover, nav a.active {
+            color: #222;
+        }
+        nav a.active::after, nav a:hover::after {
+            content: '';
+            display: block;
+            margin: 0 auto;
+            width: 60%;
+            border-bottom: 2px solid #222;
+            padding-bottom: 2px;
+        }
+        /* Section Styling */
+        .section {
+            max-width: 900px;
+            margin: 60px auto 0 auto;
+            background: rgba(255,255,255,0.85);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 36px 32px 28px 32px;
+            position: relative;
+            z-index: 1;
+            display: none;
+        }
+        .section.active {
+            display: block;
+            animation: fadeIn 0.7s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        h1, h2 {
+            color: #222;
+            margin-bottom: 12px;
+        }
+        .designation {
+            font-size: 1.3em;
+            color: #5fa8d3;
+            margin-bottom: 18px;
+        }
+        /* Education Hover Effect */
+        .edu-list li {
+            margin-bottom: 18px;
+            background: #e3f0fc;
+            border-radius: 8px;
+            padding: 14px 18px;
+            transition: box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 1px 4px rgba(95,168,211,0.07);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+        .edu-details {
+            flex: 1 1 auto;
+        }
+        .edu-score {
+            min-width: 90px;
+            text-align: right;
+            font-weight: bold;
+            color: #5fa8d3;
+            font-size: 1.1em;
+            margin-left: 18px;
+            margin-top: 2px;
+        }
+        .edu-list li ul {
+            background: none !important;
+            box-shadow: none !important;
+            padding: 0 0 0 18px !important;
+            margin: 8px 0 0 0 !important;
+            border-radius: 0 !important;
+        }
+        @media (max-width: 600px) {
+            .edu-list li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .edu-score {
+                text-align: left;
+                margin-left: 0;
+                margin-top: 8px;
+            }
+        }
+        /* Skills Block */
+        .skills-blocks {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .skill-group {
+            width: 100%;
+            background: #e3f0fc;
+            border-radius: 10px;
+            padding: 18px 24px;
+            min-width: 220px;
+            box-shadow: 0 1px 4px rgba(95,168,211,0.07);
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+            margin-bottom: 18px;
+        }
+        .skill-group:hover {
+            background: #b6d0e2;
+            box-shadow: 0 6px 24px rgba(95,168,211,0.18);
+            transform: translateY(-6px) scale(1.03);
+        }
+        .skill-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 10px;
+        }
+        .skill-item {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 1em;
+            box-shadow: 0 1px 4px rgba(95,168,211,0.07);
+            gap: 8px;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            cursor: pointer;
+            text-align: left;
+            min-width: 90px;
+        }
+        .skill-item:hover {
+            background: #5fa8d3;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(95,168,211,0.18);
+            transform: translateY(-3px) scale(1.06);
+        }
+        .skill-item svg, .skill-item i {
+            font-size: 1.3em !important;
+            margin-bottom: 0;
+        }
+        /* Contact */
+        .contact-links a {
+            display: inline-block;
+            margin-right: 22px;
+            color: #5fa8d3;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .contact-links a:hover {
+            color: #222;
+            text-decoration: underline;
+        }
+        /* Responsive */
+        @media (max-width: 700px) {
+            nav ul { padding: 0 2vw; }
+            .section { padding: 18px 6vw; }
+            .skills-blocks { flex-direction: column; gap: 14px;}
+        }
+        /* Chip and CPU SVG styles */
+        .chip-svg, .cpu-svg {
+            position: absolute;
+            opacity: 0.13;
+            z-index: 0;
+            pointer-events: none;
+            transition: transform 10s linear;
+        }
+        .chip-svg {
+            left: 12vw;
+            top: 65vh;
+            width: 110px;
+            height: 110px;
+            animation: chip-move 18s linear infinite alternate;
+        }
+        .cpu-svg {
+            right: 10vw;
+            top: 18vh;
+            width: 130px;
+            height: 130px;
+            animation: cpu-move 22s linear infinite alternate;
+        }
+        @keyframes chip-move {
+            0% { transform: translateY(0) rotate(0deg);}
+            100% { transform: translateY(-30px) rotate(8deg);}
+        }
+        @keyframes cpu-move {
+            0% { transform: translateY(0) rotate(0deg);}
+            100% { transform: translateY(25px) rotate(-6deg);}
+        }
+        /* Hover effect for all main content sections (outer boxes) */
+        .section {
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+        }
+
+        /* Hover effect for each inner block (like education, experience, project, skill-group) */
+        .edu-list li,
+        .skill-group {
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+        }
+
+        .edu-list li:hover,
+        .skill-group:hover {
+            background: #b6d0e2;
+            box-shadow: 0 6px 24px rgba(95,168,211,0.18);
+            transform: translateY(-6px) scale(1.03);
+        }
+        .coursework-file {
+            display: inline-block;
+            background: linear-gradient(90deg, #fffbe6 60%, #ffd700 100%);
+            color: #b8860b;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 6px 18px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.08em;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.18);
+            cursor: pointer;
+            border: 1.5px solid #ffd700;
+            transition: box-shadow 0.2s, background 0.2s, color 0.2s;
+            text-decoration: none;
+            margin-left: 18px;
+            vertical-align: middle;
+        }
+        .coursework-file:hover, .coursework-file:focus {
+            background: linear-gradient(90deg, #fffde4 60%, #ffe066 100%);
+            box-shadow: 0 4px 16px #ffd700, 0 0 8px #ffd700;
+            color: #ffb300;
+            outline: none;
+        }
+        .coursework-icon {
+            color: #ffd700;
+            margin-right: 8px;
+            font-size: 1.2em;
+            filter: drop-shadow(0 0 4px #ffd700);
+            vertical-align: -2px;
+            transition: color 0.2s, filter 0.2s;
+        }
+        .coursework-file:hover .coursework-icon,
+        .coursework-file:focus .coursework-icon {
+            color: #ffb300;
+            filter: drop-shadow(0 0 8px #ffb300);
+        }
+        /* Remove this block to delete the previous modification affecting skill-item hover */
+        .skill-item:hover {
+            background: #fff;
+            color: inherit;
+            box-shadow: 0 1px 4px rgba(95,168,211,0.07);
+            transform: none;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 22px;
+            margin-top: 24px;
+        }
+        .skill-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 1px 4px rgba(95,168,211,0.07);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+            cursor: pointer;
+            text-align: center;
+            padding: 12px 6px;
+        }
+        .skill-card:hover {
+            background: #5fa8d3;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(95,168,211,0.18);
+            transform: translateY(-6px) scale(1.06);
+        }
+        .skill-card i, .skill-card svg {
+            font-size: 2.2em !important;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+        .skill-card span {
+            font-size: 1em;
+            font-weight: 500;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background: Circuit lines and binary code -->
+    <div class="bg-anim-circuit" id="bg-anim-circuit"></div>
+    <!-- Chip SVG (electronics) -->
+    <svg class="chip-svg" viewBox="0 0 100 100">
+        <rect x="20" y="20" width="60" height="60" rx="10" fill="#5fa8d3"/>
+        <rect x="35" y="35" width="30" height="30" rx="5" fill="#fff"/>
+        <!-- Pins -->
+        <rect x="48" y="5" width="4" height="15" fill="#5fa8d3"/>
+        <rect x="48" y="80" width="4" height="15" fill="#5fa8d3"/>
+        <rect x="5" y="48" width="15" height="4" fill="#5fa8d3"/>
+        <rect x="80" y="48" width="15" height="4" fill="#5fa8d3"/>
+        <!-- Corners -->
+        <rect x="10" y="10" width="8" height="8" fill="#b6d0e2"/>
+        <rect x="82" y="10" width="8" height="8" fill="#b6d0e2"/>
+        <rect x="10" y="82" width="8" height="8" fill="#b6d0e2"/>
+        <rect x="82" y="82" width="8" height="8" fill="#b6d0e2"/>
+    </svg>
+    <!-- CPU SVG (computer) -->
+    <svg class="cpu-svg" viewBox="0 0 120 120">
+        <rect x="20" y="20" width="80" height="80" rx="12" fill="#b6d0e2"/>
+        <rect x="40" y="40" width="40" height="40" rx="6" fill="#e3f0fc"/>
+        <!-- Pins -->
+        <rect x="58" y="0" width="4" height="18" fill="#5fa8d3"/>
+        <rect x="58" y="102" width="4" height="18" fill="#5fa8d3"/>
+        <rect x="0" y="58" width="18" height="4" fill="#5fa8d3"/>
+        <rect x="102" y="58" width="18" height="4" fill="#5fa8d3"/>
+        <!-- Small pins -->
+        <rect x="30" y="0" width="4" height="12" fill="#b6d0e2"/>
+        <rect x="86" y="0" width="4" height="12" fill="#b6d0e2"/>
+        <rect x="30" y="108" width="4" height="12" fill="#b6d0e2"/>
+        <rect x="86" y="108" width="4" height="12" fill="#b6d0e2"/>
+        <rect x="0" y="30" width="12" height="4" fill="#b6d0e2"/>
+        <rect x="0" y="86" width="12" height="4" fill="#b6d0e2"/>
+        <rect x="108" y="30" width="12" height="4" fill="#b6d0e2"/>
+        <rect x="108" y="86" width="12" height="4" fill="#b6d0e2"/>
+    </svg>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#home" class="active" onclick="showSection('home')">Home</a></li>
+            <li><a href="#about" onclick="showSection('about')">About</a></li>
+            <li><a href="#education" onclick="showSection('education')">Education</a></li>
+            <li><a href="#skills" onclick="showSection('skills')">Skills</a></li>
+            <li><a href="#experience" onclick="showSection('experience')">Experience</a></li>
+            <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
+            <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
+        </ul>
+    </nav>
+    <!-- Sections -->
+    <div id="home" class="section active">
+        <h1>Kondaru Navya</h1>
+        <div class="designation">Aspiring Software Development Engineer</div>
+    </div>
+    <div id="about" class="section">
+        <h2>About</h2>
+        <p>
+            Enthusiastic and dedicated Electronics and Communication Engineering student with a strong academic background and a passion for technology. Aspiring software development engineer with skills in Java, Python, and data structures. Eager to learn and grow in a professional environment, with excellent communication and teamwork skills developed through group projects and extracurricular activities. Passionate about solving complex technical problems, building scalable systems, and distributed systems. Eager to join Amazon and grow in an agile, innovation-driven environment.
+        </p>
+    </div>
+    <div id="education" class="section">
+        <h2>Education</h2>
+        <ul class="edu-list">
+            <li style="display: flex; align-items: flex-start; position: relative;">
+                <div class="edu-details" style="flex:1;">
+                    <strong>Vellore Institute of Technology</strong> | Amaravati, India<br>
+                    Bachelor of Technology in Electronics Communication Engineering<br>
+                    October 2022-26 (Expected)
+                    <!-- Place Course_Work button after the matter, left-aligned but inside the content -->
+                    <div style="margin-top: 12px; display: flex; align-items: center;">
+                        <a class="coursework-file" href="course_work.html" target="_blank" tabindex="0" style="margin:0;">
+                            <span class="fa-solid fa-star coursework-icon"></span>
+                            Course_Work
+                        </a>
+                    </div>
+                </div>
+                <div class="edu-score">
+                    CGPA: 8.55
+                </div>
+            </li>
+            <li>
+                <div class="edu-details">
+                    <strong>S.K.B.R Govt Junior College</strong>, Macherla<br>
+                    Class 12 in MPC, June 2020-2022
+                </div>
+                <div class="edu-score">
+                    93.2%
+                </div>
+            </li>
+            <li>
+                <div class="edu-details">
+                    <strong>Z.P.G.H School</strong>, Macherla<br>
+                    Class 10, June 2019-2020
+                </div>
+                <div class="edu-score">
+                    90%
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="skills" class="section">
+        <h2>Skills</h2>
+        <div class="skills-blocks">
+            <div class="skill-group">
+                <h3>Programming Languages</h3>
+                <div class="skill-list">
+                    <span class="skill-item" style="color:#3776AB;">
+                        <i class="fab fa-python" style="color:#3776AB;"></i> Python
+                    </span>
+                    <span class="skill-item" style="color:#007396;">
+                        <i class="fab fa-java" style="color:#007396;"></i> Java (DSA)
+                    </span>
+                    <span class="skill-item" style="color:#A8B9CC;">
+                        <!-- C language SVG logo -->
+                        <svg width="18" height="18" viewBox="0 0 128 128" style="vertical-align:middle;"><circle cx="64" cy="64" r="64" fill="#A8B9CC"/><text x="38" y="90" font-size="70" fill="#fff" font-family="Arial" font-weight="bold">C</text></svg>
+                        C (basic)
+                    </span>
+                    <span class="skill-item" style="color:#00BFAE;">
+                        <!-- SystemVerilog SVG icon -->
+                        <svg width="18" height="18" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#00BFAE"/><text x="7" y="22" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">SV</text></svg>
+                        SystemVerilog
+                    </span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>Scripting Languages</h3>
+                <div class="skill-list">
+                    <span class="skill-item" style="color:#8E489B;">
+                        <!-- Perl SVG icon -->
+                        <svg width="18" height="18" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#8E489B"/><text x="7" y="22" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">PL</text></svg>
+                        PERL
+                    </span>
+                    <span class="skill-item" style="color:#4EAA25;">
+                        <!-- Bash SVG icon -->
+                        <svg width="18" height="18" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#4EAA25"/><text x="7" y="22" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">SH</text></svg>
+                        BASH
+                    </span>
+                    <span class="skill-item" style="color:#E4A42D;">
+                        <!-- TCL SVG icon -->
+                        <svg width="18" height="18" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#E4A42D"/><text x="7" y="22" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">TCL</text></svg>
+                        TCL
+                    </span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>Tools & Technologies</h3>
+                <div class="skill-list">
+                    <span class="skill-item" style="color:#0076A8;">
+                        <!-- MATLAB SVG icon -->
+                        <svg width="18" height="18" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#0076A8"/><text x="3" y="22" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">MAT</text></svg>
+                        MATLAB
+                    </span>
+                    <span class="skill-item" style="color:#00BFAE;">
+                        <!-- Vivado SVG icon -->
+                        <svg width="18" height="18" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#00BFAE"/><text x="3" y="22" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">VIV</text></svg>
+                        Vivado
+                    </span>
+                    <span class="skill-item" style="color:#FFB300;">
+                        <!-- NI LabView SVG icon -->
+                        <svg width="18" height="18" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#FFB300"/><text x="3" y="22" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">NI</text></svg>
+                        NI LabView
+                    </span>
+                    <span class="skill-item" style="color:#007ACC;">
+                        <!-- VS Code icon (closest for VS Studio) -->
+                        <i class="fab fa-vuejs" style="color:#007ACC;"></i> VS Studio
+                    </span>
+                    <span class="skill-item" style="color:#F05032;">
+                        <i class="fab fa-git-alt" style="color:#F05032;"></i> Git
+                    </span>
+                    <span class="skill-item" style="color:#FF9900;">
+                        <i class="fab fa-aws" style="color:#FF9900;"></i> AWS (basic)
+                    </span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>Concepts</h3>
+                <div class="skill-list">
+                    <span class="skill-item" style="color:#006699;">
+                        <i class="fa-solid fa-database" style="color:#006699;"></i> Data Structures
+                    </span>
+                    <span class="skill-item" style="color:#E34F26;">
+                        <i class="fa-solid fa-gears" style="color:#E34F26;"></i> Algorithms
+                    </span>
+                    <span class="skill-item" style="color:#7952B3;">
+                        <i class="fa-solid fa-cubes" style="color:#7952B3;"></i> OOPs
+                    </span>
+                    <span class="skill-item" style="color:#008080;">
+                        <i class="fa-solid fa-desktop" style="color:#008080;"></i> Operating Systems (basic)
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="experience" class="section">
+        <h2>Experience</h2>
+        <ul class="edu-list">
+            <li>
+                <strong>Undergraduate Research Intern | NIT Warangal, Telangana</strong><br>
+                <span style="color:#5fa8d3;">Physics Department</span>
+                <ul style="margin: 0; padding: 0 0 0 18px;">
+                    <li style="margin-bottom: 0;">Assisted in conducting experiments on TENG’s which generate electricity from mechanical energy, rain, wind etc.</li>
+                    <li style="margin-bottom: 0;">Conducted an experiment on Liquid solid triboelectric nanogenerators.</li>
+                    <li style="margin-bottom: 0;">Presented research findings at academic conferences.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Pharma Predict Project</strong><br>
+                <span style="color:#5fa8d3;">Machine Learning-driven System</span>
+                <ul style="margin: 0; padding: 0 0 0 18px;">
+                    <li style="margin-bottom: 0;">Enhanced medications and inventory management in pharmacies and healthcare.</li>
+                    <li style="margin-bottom: 0;">Meditated stock levels, improved patient care, and streamlined pharmaceutical supply chains.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>LIVIT (health and wellness) CLUB | VIT-AP University</strong><br>
+                <span style="color:#5fa8d3;">Secretary</span>
+                <ul style="margin: 0; padding: 0 0 0 18px;">
+                    <li style="margin-bottom: 0;">Documented each event conducted by the club.</li>
+                    <li style="margin-bottom: 0;">Team management skills and documentation skills.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="projects" class="section">
+        <h2>Projects</h2>
+        <ul class="edu-list">
+            <li>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <strong>Non-Invasive Glucometer</strong>
+                        <span style="display:block; color:#5fa8d3; font-size:0.98em; margin-bottom:4px;">Biomedical Device Project</span>
+                    </div>
+                    <span style="color:#888; font-size:0.95em;">Arduino, NIR, Signal Processing</span>
+                </div>
+                <ul style="margin: 6px 0 0 18px;">
+                    <li>Designed a non-invasive glucometer using NIR light for blood glucose detection.</li>
+                    <li>Applied signal processing techniques and displayed results on LCD.</li>
+                    <li>Explored smartphone connectivity via Arduino Uno.</li>
+                    <li>Utilized the intensity ratio of absorbed to scattered NIR light to calculate glucose levels.</li>
+                    <li>Enabled data transmission to a smartphone app for user convenience.</li>
+                </ul>
+            </li>
+            <li>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <strong>Smart Trafficking</strong>
+                        <span style="display:block; color:#5fa8d3; font-size:0.98em; margin-bottom:4px;">Real-Time Traffic Control System</span>
+                    </div>
+                    <span style="color:#888; font-size:0.95em;">Python, Sensors</span>
+                </div>
+                <ul style="margin: 6px 0 0 18px;">
+                    <li>Developed a smart traffic control system using sensors and Python.</li>
+                    <li>Implemented dynamic signal timing based on real-time traffic density.</li>
+                    <li>Improved urban traffic efficiency and safety through automation.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="contact" class="section">
+        <h2>Contact</h2>
+        <div class="contact-links">
+            <a href="mailto:navyakondaru591@gmail.com"><i class="fa-solid fa-envelope"></i> navyakondaru591@gmail.com</a>
+            <a href="https://www.linkedin.com/in/your-linkedin" target="_blank"><i class="fab fa-linkedin"></i> Kondaru Navya</a>
+        </div>
+        <div style="margin-top:18px;">
+            <span class="label">Location:</span> Palnadu, India<br>
+            <span class="label">Phone:</span> 90527323037
+        </div>
+    </div>
+    <script>
+        // Section navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.querySelector('nav a[href="#' + sectionId + '"]').classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        window.onload = function() {
+            // Show section based on hash
+            const hash = window.location.hash.replace('#','');
+            if(hash && document.getElementById(hash)) showSection(hash);
+
+            // --- Animated circuit lines and binary code ---
+            const bg = document.getElementById('bg-anim-circuit');
+            // Add circuit lines
+            for(let i=0; i<10; i++) {
+                let line = document.createElement('div');
+                line.className = 'circuit-line';
+                line.style.left = (8 + i*9) + 'vw';
+                line.style.animationDelay = (Math.random()*8) + 's';
+                bg.appendChild(line);
+            }
+            // Add circuit dots
+            for(let i=0; i<12; i++) {
+                let dot = document.createElement('div');
+                dot.className = 'circuit-dot';
+                dot.style.left = (5 + i*7) + 'vw';
+                dot.style.animationDelay = (Math.random()*6) + 's';
+                bg.appendChild(dot);
+            }
+            // Add binary code
+            for(let i=0; i<14; i++) {
+                let bin = document.createElement('div');
+                bin.className = 'binary';
+                bin.innerText = Math.random() > 0.5 ? '101010' : '110011';
+                bin.style.left = (3 + i*7) + 'vw';
+                bin.style.fontSize = (0.9 + Math.random()*0.7) + 'em';
+                bin.style.animationDelay = (Math.random()*10) + 's';
+                bg.appendChild(bin);
+            }
+        }
+        window.onhashchange = function() {
+            const hash = window.location.hash.replace('#','');
+            if(hash && document.getElementById(hash)) showSection(hash);
+        }
+    </script>
+</body>
+</html>
